@@ -51,8 +51,7 @@ const Login: React.FC<ChildProps> = (props) => {
 
 
   return(
-    <div className="w-1/3 text-center flex flex-col m-6 space-y-10 bg-white shadow-2xl rounded-2xl">
-      <div className="p-6 md:p-20">
+    <div className="w-2/3 p-4 px-10 text-center flex flex-col space-y-2 bg-white shadow-2xl rounded-2xl">
         <h2 className="font-sans font-bold mb-2 text-lg">Log In</h2>
         <p className="mb-2 max-2-sm font-sans font-light text-gray-600">
           Log in to your account to access your Paragon integrations
@@ -65,13 +64,11 @@ const Login: React.FC<ChildProps> = (props) => {
                placeholder="Password"
                onChange={(e) => handleInputChange(e)}/>
         {errorMessage !== "" && <div className="text-red-700 my-2"> {errorMessage} </div>}
-        <div>
           <button
-            className="w-full md:w-auto h-1 flex justify-center items-center p-6 space-x-4 font-sans font-bold text-white rounded-md shadow-lg px-9 bg-cyan-700 shadow-cyan-100 hover:bg-opacity-90 shadow-sm hover:shadow-lg border transition hover:-translate-y-0.5 duration-150"
+            className="shrink h-1 flex justify-center items-center p-6 space-x-4 font-sans font-bold text-white rounded-md shadow-lg px-9 bg-cyan-700 shadow-cyan-100
+                    hover:bg-opacity-90 shadow-sm hover:shadow-lg border transition hover:-translate-y-0.5 duration-150"
             onClick={() => handleSubmit()} type="submit">Login
           </button>
-        </div>
-      </div>
     </div>
   );
 }
