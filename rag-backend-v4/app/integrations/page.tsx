@@ -5,6 +5,7 @@ import Login from "@/app/components/login/login";
 import useSessionStorage from "@/app/hooks/useSessionStorage";
 import { useEffect, useState } from "react";
 import { IIntegrationMetadata } from "@/node_modules/@useparagon/connect/dist/src/entities/integration.interface";
+import Header from "@/app/components/header";
 
 export default function Page(){
     const jwt = useSessionStorage("jwt");
@@ -31,16 +32,18 @@ export default function Page(){
     if(user == null && jwt == ""){
         return (
           <main className="h-screen w-screen flex justify-center items-center background-gradient">
+            <Header />
             <Login setUser={setUser} />
           </main>
-            );
-            }else {
-            if(user == null){
-            return(<div>LOADING...</div>)
-          }
-            else {
+        );
+    }else {
+      if(user == null){
+        return(<div>LOADING...</div>)
+      }
+      else {
             return (
-            <main className="h-screen w-screen flex justify-center items-center background-gradient">
+            <main className="h-screen w-screen flex flex-col space-y-32 justify-center items-center background-gradient">
+              <Header />
             <div className={"flex flex-col p-4 space-y-2 border-2 border-gray-300 rounded-xl w-1/4 "}>
             <h1 className={"text-2xl font-mono font-bold"}>Integrations:</h1>
             {integrationMetadata.map((integration: IIntegrationMetadata) => {
