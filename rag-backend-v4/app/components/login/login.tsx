@@ -6,9 +6,8 @@ export default function Login(){
   const handleSubmit = async (e: FormEvent) => {
     const formData = new FormData(e.target as HTMLFormElement);
 
-    console.log(formData.get("email")?.toString() ?? "");
-    // await getParagonUserToken(formData.get("email")?.toString() ?? "",
-    //   formData.get("password")?.toString() ?? "");
+    await getParagonUserToken(formData.get("email")?.toString() ?? "",
+      formData.get("password")?.toString() ?? "");
   };
 
 
