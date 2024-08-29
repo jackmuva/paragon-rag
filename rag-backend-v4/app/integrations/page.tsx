@@ -1,18 +1,36 @@
 "use client";
 
 import { AuthenticatedConnectUser, paragon } from "@useparagon/connect";
-// import styles from "../styles/Integrations.module.css";
-import useParagonAuth from "@/app/hooks/useParagonAuth";
 import Login from "@/app/components/login/login";
 import useSessionStorage from "@/app/hooks/useSessionStorage";
+import { useEffect, useState } from "react";
+import { IIntegrationMetadata } from "@/node_modules/@useparagon/connect/dist/src/entities/integration.interface";
 
-function Page(){
-    const { user } = useParagonAuth();
-    const jwt = useSessionStorage("jwt")
+export default function Page(){
+    const jwt = useSessionStorage("jwt");
+    const [user, setUser] = useState<AuthenticatedConnectUser | null>(null);
+    const [integrationMetadata, setIntegrationMetadata] = useState<Array<IIntegrationMetadata>>([]);
+
+    useEffect(() => {
+        if(sessionStorage.getItem("jwt")){
+            paragon.authenticate(process.env.NEXT_PUBLIC_PARAGON_PROJECT_ID ?? "", sessionStorage.getItem("jwt") ?? "");
+            const usr = paragon.getUser();
+            if(usr.authenticated){
+                setUser(usr);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        console.log("hit")
+        setIntegrationMetadata(paragon.getIntegrationMetadata());
+    }, [user]);
+
+    console.log(user);
 
     if(user == null && jwt == ""){
         return (
-            <Login/>
+          <Login setUser={setUser}/>
         );
     }else {
         if(user == null){
@@ -20,11 +38,11 @@ function Page(){
         }
         else {
             return (
-                <div>
-                    {paragon.getIntegrationMetadata().map((integration) => {
-                        const integrationEnabled = user.authenticated && user.integrations[integration.type]?.enabled;
-                        return (
-                            <div key={integration.type}>
+                  <div className={"flex flex-row space-x-10 align-middle"}>
+                      {integrationMetadata.map((integration: IIntegrationMetadata) => {
+                          const integrationEnabled = user.authenticated && user.integrations[integration.type]?.enabled;
+                          return (
+                            <div key={integration.type} className={"m-4"}>
                                 <img src={integration.icon} style={{maxWidth: "30px"}}/>
                                 <p>{integration.name}</p>
 
@@ -32,12 +50,10 @@ function Page(){
                                     {integrationEnabled ? "Manage" : "Enable"}
                                 </button>
                             </div>
-                        );
-                    })}
-                </div>
+                          );
+                      })}
+                  </div>
             );
         }
     }
 }
-
-export default Page;
