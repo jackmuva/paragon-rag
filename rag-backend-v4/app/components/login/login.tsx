@@ -51,7 +51,7 @@ const Login: React.FC<ChildProps> = (props) => {
 
 
   return(
-    <div className="mt-40 mx-[640px] place-self-center w-1/3 text-center flex flex-col m-6 space-y-10 bg-white shadow-2xl rounded-2xl">
+    <div className="w-1/3 text-center flex flex-col m-6 space-y-10 bg-white shadow-2xl rounded-2xl">
       <div className="p-6 md:p-20">
         <h2 className="font-sans font-bold mb-2 text-lg">Log In</h2>
         <p className="mb-2 max-2-sm font-sans font-light text-gray-600">
