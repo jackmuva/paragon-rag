@@ -1,15 +1,18 @@
+"use client";
+
 import { AuthenticatedConnectUser, paragon } from "@useparagon/connect";
-import styles from "../styles/Integrations.module.css";
+// import styles from "../styles/Integrations.module.css";
 import useParagonAuth from "@/app/hooks/useParagonAuth";
 import Login from "@/app/components/login/login";
+import useSessionStorage from "@/app/hooks/useSessionStorage";
 
 function Page(){
     const { user } = useParagonAuth();
+    const jwt = useSessionStorage("jwt")
 
-    if(user == null && sessionStorage.getItem("jwt") == null){
+    if(user == null && jwt == ""){
         return (
             <Login/>
-          // <div>Login Placeholder</div>
         );
     }else {
         if(user == null){
@@ -21,7 +24,7 @@ function Page(){
                     {paragon.getIntegrationMetadata().map((integration) => {
                         const integrationEnabled = user.authenticated && user.integrations[integration.type]?.enabled;
                         return (
-                            <div key={integration.type} className={styles.row}>
+                            <div key={integration.type}>
                                 <img src={integration.icon} style={{maxWidth: "30px"}}/>
                                 <p>{integration.name}</p>
 
