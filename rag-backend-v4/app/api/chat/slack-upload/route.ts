@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
   try {
     const contents = await request.json();
     const documents = [new Document({text: contents.text,
-                                      metadata:{URL: contents.url}})];
+      metadata:{URL: "slack-channel:" + contents.channel}})];
 
     const index = await getDataSource();
     if (!index) {
