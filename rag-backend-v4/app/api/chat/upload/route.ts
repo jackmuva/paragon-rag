@@ -11,7 +11,6 @@ export const dynamic = "force-dynamic";
 export async function POST(request: NextRequest) {
   try {
     const { base64 }: { base64: string } = await request.json();
-    console.log(base64);
     if (!base64) {
       return NextResponse.json(
         { error: "base64 is required in the request body" },
