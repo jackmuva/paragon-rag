@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
   try {
     const contents = await request.json();
     const documents = [new Document({text: contents.text,
-      metadata:{URL: "Gdrive filename:" + contents.filename}})];
+      metadata:{URL: "Google Drive filename:" + contents.filename}})];
 
     const index = await getDataSource();
     if (!index) {
